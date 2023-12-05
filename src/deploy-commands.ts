@@ -6,15 +6,14 @@ import * as cfg from "./config";
 
 config();
 
-
-const commands = [];
+const commands: any[] = [];
 
 const folderPath = join(__dirname, "commands", "Slash");
 const commandFolders = readdirSync(folderPath);
 
 for (const folder of commandFolders) {
     const commandsPath = join(folderPath, folder);
-    const commandFiles = readdirSync(commandsPath).filter(file => file.endsWith(".js") || file.endsWith(".ts")); /** Allow for DEBUG and PRODUCTION */
+    const commandFiles = readdirSync(commandsPath).filter(file => file.endsWith(".js") || file.endsWith(".ts"));
 
     for (const file of commandFiles) {
         const path = join(commandsPath, file);
@@ -35,25 +34,40 @@ for (const folder of commandFolders) {
         console.error("token is not defined in .env");
         process.exit(1);
     }
-    
+
     const rest = new REST({ version: '10' }).setToken(process.env.token || "");
+
     try {
         console.log(`Started refreshing application (/) commands. (${commands.length})`);
 
+        let data: any[] = [];
 
         if (process.env.environment === "production") {
-            await rest.put(
+            const responseData = await rest.put(
                 Routes.applicationCommands(process.env.client_id),
                 { body: commands },
             );
+
+            if (Array.isArray(responseData)) {
+                data = responseData;
+            } else {
+                console.error("Invalid response data format");
+                process.exit(1);
+            }
         } else {
-            await rest.put(
+            const responseData = await rest.put(
                 Routes.applicationGuildCommands(process.env.client_id, cfg.default.GuildId),
                 { body: commands },
             );
-        
+
+            if (Array.isArray(responseData)) {
+                data = responseData;
+            } else {
+                console.error("Invalid response data format");
+                process.exit(1);
+            }
         }
-        // @ts-ignore
+
         console.log(`Successfully reloaded ${data.length} application (/) commands.`);
     } catch (error) {
         console.error(error);
