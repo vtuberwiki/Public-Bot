@@ -16,15 +16,7 @@ export const command: ISlashCommand = {
         .setDescription("Get stats about the bot."),
     async execute(interaction: CommandInteraction) {
 
-        const discordData: StatsData = {
-            Guilds: fNumber(interaction.client.guilds.cache.size),
-            Users: fNumber(interaction.client.users.cache.filter((user) => !user.bot).size),
-            Channels: fNumber(interaction.client.channels.cache.size),
-            Commands: fNumber((interaction.client as IClient).commands.size),
-            Uptime: interaction.client.uptime,
-            Emojis: fNumber(interaction.client.emojis.cache.size),
-        };
-
+        let discordData: StatsData = {};
         let webData: StatsData = {};
         let wikiData: StatsData = {};
 
@@ -49,6 +41,15 @@ export const command: ISlashCommand = {
                 Authors: fNumber((await sdk.getAuthors()).length),
                 Topics: fNumber((await sdk.getTopics()).length),
             }
+
+            discordData = {
+                Guilds: fNumber(interaction.client.guilds.cache.size),
+                Users: fNumber(interaction.client.users.cache.filter((user) => !user.bot).size),
+                Channels: fNumber(interaction.client.channels.cache.size),
+                Commands: fNumber((interaction.client as IClient).commands.size),
+                Uptime: interaction.client.uptime,
+                Emojis: fNumber(interaction.client.emojis.cache.size),
+            };
 
             const WebEmbed = new EmbedBuilder()
                 .setTitle("Web")
