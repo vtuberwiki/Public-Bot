@@ -4,6 +4,7 @@ import Sdk from "vtuberwiki-sdk";
 import axios from "axios";
 import IClient from "../../../interfaces/IClient";
 import { fNumber } from "developer-toolkit-utils";
+import config from "../../../config";
 
 type StatsData = {
     [key: string]: any;
@@ -107,7 +108,7 @@ export const command: ISlashCommand = {
                         .setLabel("View on GitHub")
                         .setStyle(ButtonStyle.Link)
                         .setURL("https://github.com/vtuberwiki/Public-Bot")
-                        .setEmoji((global as any).CachedEmojis?.Github)
+                        .setEmoji(config.Emojis.Github)
                 );
 
             //@ts-ignore
