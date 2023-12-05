@@ -2,6 +2,7 @@ import { REST, Routes } from "discord.js";
 import { readdirSync } from "node:fs";
 import { join } from "node:path";
 import { config } from 'dotenv';
+import * as cfg from "./config";
 
 config();
 
@@ -39,8 +40,19 @@ for (const folder of commandFolders) {
     try {
         console.log(`Started refreshing application (/) commands. (${commands.length})`);
 
-        const data = await rest.put(Routes.applicationCommands(process.env.client_id as string), { body: commands });
 
+        if (process.env.environment === "production") {
+            await rest.put(
+                Routes.applicationCommands(process.env.client_id),
+                { body: commands },
+            );
+        } else {
+            await rest.put(
+                Routes.applicationGuildCommands(cfg.default.GuildId, process.env.client_id),
+                { body: commands },
+            );
+        
+        }
         // @ts-ignore
         console.log(`Successfully reloaded ${data.length} application (/) commands.`);
     } catch (error) {

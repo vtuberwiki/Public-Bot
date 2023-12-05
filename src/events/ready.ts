@@ -44,6 +44,8 @@ function getActivityType(type: string): ActivityType | undefined {
             return ActivityType.Watching;
         case 'competing':
             return ActivityType.Competing;
+        case 'custom':
+            return ActivityType.Custom;
         default:
             return undefined;
     }
