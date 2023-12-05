@@ -29,7 +29,7 @@ for (const folder of commandFolders) {
     try {
         console.log(`Started refreshing application (/) commands. (${commands.length})`);
 
-        const data = await rest.put(Routes.applicationGuildCommands("1164189020922843257", "1010372303911129088"), { body: commands });
+        const data = await rest.put(Routes.applicationCommands("1010372303911129088"), { body: commands });
 
         // @ts-ignore
         console.log(`Successfully reloaded ${data.length} application (/) commands.`);
