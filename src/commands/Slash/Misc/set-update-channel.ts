@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, CommandInteraction, ChannelType } from "discord.js";
+import { SlashCommandBuilder, CommandInteraction, ChannelType, PermissionFlagsBits } from "discord.js";
 import ISlashCommand from "../../../interfaces/ISlashCommand";
 import axios from "axios";
 import config from "../../../config";
@@ -8,6 +8,7 @@ export const command: ISlashCommand = {
     data: new SlashCommandBuilder()
         .setName("set-update-channel")
         .setDescription("Set a channel for designated updates to be sent to.")
+        .setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
         .addChannelOption(option =>
             option.setName("channel")
                 .setDescription("The channel you want to set as the designated update channel.")
