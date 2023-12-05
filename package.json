@@ -1,0 +1,62 @@
+{
+  "name": "vtuberwiki-bot",
+  "version": "0.0.1",
+  "description": "The Official Public Discord Bot",
+  "main": "dist/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/deploy-commands.js && node dist/app.js",
+    "dev": "nodemon --watch src --exec ts-node src/app.ts",
+    "dev::idle": "ts-node src/app.ts",
+    "deploy-commands": "ts-node src/deploy-commands.ts",
+    "postinstall": "npm run build",
+    "build": "tsc"
+  },
+  "post_data": {
+    "allowDb": false
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vtuberwiki/Public-Bot.git"
+  },
+  "author": "withervt",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/vtuberwiki/Public-Bot/issues"
+  },
+  "homepage": "https://github.com/vtuberwiki/Public-Bot#readme",
+  "devDependencies": {
+    "@types/cors": "^2.8.14",
+    "@types/express": "^4.17.18",
+    "@types/nodemailer": "^6.4.13",
+    "eslint": "^8.52.0",
+    "nodemon": "^3.0.1",
+    "ts-loader": "^9.4.4",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@discordjs/builders": "^1.6.5",
+    "@discordjs/rest": "^2.0.1",
+    "@octokit/rest": "^20.0.2",
+    "axios": "^1.5.1",
+    "body-parser": "^1.20.2",
+    "common-tags": "^1.8.2",
+    "developer-toolkit-utils": "^1.0.9",
+    "discord-api-types": "^0.37.59",
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.5.3",
+    "node-cron": "^3.0.2",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^6.9.7",
+    "os": "^0.1.2",
+    "sqlite3": "^5.1.6",
+    "vtuberwiki-sdk": "^0.0.3"
+  },
+  "engines": {
+    "node": "20.10.0",
+    "npm": "10.2.4"
+  }
+}
