@@ -3,31 +3,6 @@ import ISlashCommand from "../../../interfaces/ISlashCommand";
 import Sdk from "vtuberwiki-sdk";
 
 
-function ProcessCustomComponents(data: any) {
-    let newComponents: any[] = [];
-
-    // Split by new line
-    const lines = data.split("\n");
-
-    lines.forEach((line: string) => {
-        // Remove <quote-profile> and its content
-        line = line.replace(/<quote-profile>.*?<\/quote-profile>/g, 'These can not be displayed in Discord.');
-
-        // Remove <video> and its content
-        line = line.replace(/<video>.*?<\/video>/g, 'These can not be displayed in Discord.');
-
-        // Remove <img> and its content
-        line = line.replace(/<img>.*?<\/img>/g, 'These can not be displayed in Discord.');
-
-        // Exclude empty lines
-        if (line.trim() !== '') {
-            newComponents.push(line);
-        }
-    });
-
-    // Join the newComponents array by new line
-    return newComponents.join("\n");
-}
 
 
 
@@ -106,12 +81,6 @@ export const command: ISlashCommand = {
                         iconURL: "https://pbs.twimg.com/profile_images/1713923311858593792/doH2HOXp_400x400.png"
                     });
 
-                const showAboutButton = new ButtonBuilder()
-                    .setCustomId(`show_about:${vtuber.name}`)
-                    .setLabel("Show about")
-                    .setEmoji("ℹ️")
-                    .setStyle(ButtonStyle.Primary);
-
                 const showLinkButton = new ButtonBuilder()
                     .setLabel("Show on vtubers.wiki")
                     .setStyle(ButtonStyle.Link)
@@ -119,24 +88,10 @@ export const command: ISlashCommand = {
                     .setEmoji("ℹ️");
 
                 const row = new ActionRowBuilder()
-                    .addComponents(showAboutButton, showLinkButton);
+                    .addComponents(showLinkButton);
 
                 //@ts-ignore
                 await interaction.reply({ embeds: [embed], components: [row] });
-
-                await interaction.client.on(Events.InteractionCreate, async (interaction: any) => {
-                    if (!interaction.isButton()) return;
-                    if (interaction.customId === `show_about:${vtuber.name}`) {
-                        const BodyLimit = 2048;
-                        const Body = vtuber.body;
-                        const BodyLength = Body.length;
-
-                        const NewBody = BodyLength > BodyLimit ? Body.slice(0, BodyLimit) + "..." : Body;
-                        embed.setDescription(ProcessCustomComponents(NewBody));
-                        embed.spliceFields(0, embed.data.fields?.length as number || 4);
-                        await interaction.update({ embeds: [embed], components: [] });
-                    }
-                });
 
             } else {
                 // If there are multiple matches, return a list of them
