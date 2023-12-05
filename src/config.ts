@@ -13,14 +13,40 @@ const config: IConfig = {
     Activities: [
         {
             name: "⭐ me on github!",
+            type: "LISTENING"
         },
         {
-            name: "Make sure to check out the rules!",
+            name: "How do we change this?...HELP!",
+            type: "WATCHING"
+        },
+        {
+            name: "cat videos on YouTube",
+            type: "WATCHING"
+        },
+        {
+            name: "404: Status not found",
+            type: "LISTENING"
+        },
+        {
+            name: "Currently outsmarting CAPTCHAs",
+            type: "PLAYING"
+        },
+        {
+            name: "Dancing like no one's watching (because no one is)",
+            type: "LISTENING"
+        },
+        {
+            name: "Trying to catch up with my backlog of memes",
+            type: "WATCHING"
+        },
+        {
+            name: "In a committed relationship with coffee",
+            type: "LISTENING"
         }
     ] as IActivity[],
     Emojis: {
         "Github": "<:githubblack:1181341718075949217>",
-        "Info":  "<:5020info:1181343773456863253>",
+        "Info": "<:5020info:1181343773456863253>",
         "Transgender_Heart": "<:5766transgendersparkleheart:1181343771842072698>",
         "Transgender_Flag": "🏳️‍⚧️",
     },

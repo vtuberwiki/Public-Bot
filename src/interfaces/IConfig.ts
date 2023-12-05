@@ -2,6 +2,7 @@ import { GatewayIntentBits } from 'discord.js';
 
 interface IActivity {
     name: string;
+    type?: "PLAYING" | "LISTENING" | "WATCHING" | "COMPETING";
 }
 
 /**
