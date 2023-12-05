@@ -48,7 +48,7 @@ for (const folder of commandFolders) {
             );
         } else {
             await rest.put(
-                Routes.applicationGuildCommands(cfg.default.GuildId, process.env.client_id),
+                Routes.applicationGuildCommands(process.env.client_id, cfg.default.GuildId),
                 { body: commands },
             );
         
