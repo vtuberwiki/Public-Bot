@@ -25,11 +25,21 @@ for (const folder of commandFolders) {
 }
 
 (async () => {
+    if (!process.env.client_id) {
+        console.error("client_id is not defined in .env");
+        process.exit(1);
+    }
+
+    if (!process.env.token) {
+        console.error("token is not defined in .env");
+        process.exit(1);
+    }
+    
     const rest = new REST({ version: '10' }).setToken(process.env.token || "");
     try {
         console.log(`Started refreshing application (/) commands. (${commands.length})`);
 
-        const data = await rest.put(Routes.applicationCommands("1010372303911129088"), { body: commands });
+        const data = await rest.put(Routes.applicationCommands(process.env.client_id as string), { body: commands });
 
         // @ts-ignore
         console.log(`Successfully reloaded ${data.length} application (/) commands.`);
