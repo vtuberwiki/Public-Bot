@@ -16,7 +16,8 @@ export const command: ISlashCommand = {
         .setDescription("Get stats about the bot."),
     async execute(interaction: CommandInteraction) {
 
-        let discordData: StatsData = {};
+        await interaction.deferReply();
+
         let webData: StatsData = {};
         let wikiData: StatsData = {};
 
@@ -42,15 +43,6 @@ export const command: ISlashCommand = {
                 Topics: fNumber((await sdk.getTopics()).length),
             }
 
-            discordData = {
-                Guilds: fNumber(interaction.client.guilds.cache.size),
-                Users: fNumber(interaction.client.users.cache.filter((user) => !user.bot).size),
-                Channels: fNumber(interaction.client.channels.cache.size),
-                Commands: fNumber((interaction.client as IClient).commands.size),
-                Uptime: interaction.client.uptime,
-                Emojis: fNumber(interaction.client.emojis.cache.size),
-            };
-
             const WebEmbed = new EmbedBuilder()
                 .setTitle("Web")
                 .setDescription("Stats about the web.")
@@ -69,16 +61,6 @@ export const command: ISlashCommand = {
                     iconURL: "https://pbs.twimg.com/profile_images/1713923311858593792/doH2HOXp_400x400.png"
                 });
 
-            const DiscordEmbed = new EmbedBuilder()
-                .setTitle("Discord")
-                .setDescription("Stats about the discord bot.")
-                .setTimestamp()
-                .setFooter({
-                    text: "Powered by https://vtubers.wiki/sdk/node",
-                    iconURL: "https://pbs.twimg.com/profile_images/1713923311858593792/doH2HOXp_400x400.png"
-                });
-
-
             Object.keys(webData).forEach((key: string) => {
                 WebEmbed.addFields({
                     name: key.replace(/_/g, " "),
@@ -95,13 +77,6 @@ export const command: ISlashCommand = {
                 });
             });
 
-            Object.keys(discordData).forEach((key: string) => {
-                DiscordEmbed.addFields({
-                    name: key.replace(/_/g, " "),
-                    value: discordData[key].toString(),
-                    inline: true,
-                });
-            });
 
             const row = new ActionRowBuilder()
                 .addComponents(
@@ -113,7 +88,7 @@ export const command: ISlashCommand = {
                 );
 
             //@ts-ignore
-            await interaction.reply({ embeds: [WebEmbed, WikiEmbed, DiscordEmbed], components: [row] });
+            await interaction.editReply({ embeds: [WebEmbed, WikiEmbed], components: [row] });
 
         } catch (error) {
             console.error(error);
