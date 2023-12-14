@@ -10,7 +10,8 @@
     "dev::idle": "ts-node src/app.ts",
     "deploy-commands": "ts-node src/deploy-commands.ts",
     "postinstall": "npm run build",
-    "build": "tsc"
+    "build": "tsc",
+    "commitmsg": "commitlint --edit $HUSKY_GIT_PARAMS"
   },
   "post_data": {
     "allowDb": false
@@ -30,6 +31,7 @@
     "@types/express": "^4.17.18",
     "@types/nodemailer": "^6.4.13",
     "eslint": "^8.52.0",
+    "husky": "^8.0.3",
     "nodemon": "^3.0.1",
     "ts-loader": "^9.4.4",
     "ts-node": "^10.9.1",
@@ -58,5 +60,10 @@
   "engines": {
     "node": "20.10.0",
     "npm": "10.2.4"
-  }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "npm run commitmsg"
+    }
+  }  
 }
