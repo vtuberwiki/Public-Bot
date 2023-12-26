@@ -43,8 +43,8 @@ for (const folder of commandFolders) {
         let data: any[] = [];
 
         if (process.env.environment === "production") {
-            // Check for production guild ID
-            if (cfg.default.GuildIds.production !== null) {
+            // Check if a specific production guild ID is provided
+            if (cfg.default.GuildIds.production) {
                 const responseData = await rest.put(
                     Routes.applicationGuildCommands(process.env.client_id, cfg.default.GuildIds.production),
                     { body: commands },
@@ -73,20 +73,36 @@ for (const folder of commandFolders) {
                 }
             }
         } else {
-            // Use development guild ID for non-production environments
-            const responseData = await rest.put(
-                Routes.applicationGuildCommands(process.env.client_id, cfg.default.GuildIds.development ?? ""),
-                { body: commands },
-            );
+            // Check if a specific development guild ID is provided
+            if (cfg.default.GuildIds.development) {
+                const responseData = await rest.put(
+                    Routes.applicationGuildCommands(process.env.client_id, cfg.default.GuildIds.development),
+                    { body: commands },
+                );
         
-            // Handle the response
-            if (Array.isArray(responseData)) {
-                data = responseData;
+                // Handle the response
+                if (Array.isArray(responseData)) {
+                    data = responseData;
+                } else {
+                    console.error("Invalid response data format");
+                    process.exit(1);
+                }
             } else {
-                console.error("Invalid response data format");
-                process.exit(1);
+                // Use global application commands in non-production if no specific guild ID is provided
+                const responseData = await rest.put(
+                    Routes.applicationCommands(process.env.client_id),
+                    { body: commands },
+                );
+        
+                // Handle the response
+                if (Array.isArray(responseData)) {
+                    data = responseData;
+                } else {
+                    console.error("Invalid response data format");
+                    process.exit(1);
+                }
             }
-        }
+        }        
         
 
         console.log(`Successfully reloaded ${data.length} application (/) commands.`);
