@@ -16,7 +16,7 @@ interface IConfig {
     UpdatesChannel: string;
     GuildIds: {
         production: string | null;
-        development: string;
+        development: string | null;
     }
     StaffRole: string;
     Intents: GatewayIntentBits[];

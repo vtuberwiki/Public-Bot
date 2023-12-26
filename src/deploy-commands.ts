@@ -43,12 +43,14 @@ for (const folder of commandFolders) {
         let data: any[] = [];
 
         if (process.env.environment === "production") {
+            // Check for production guild ID
             if (cfg.default.GuildIds.production !== null) {
                 const responseData = await rest.put(
-                    Routes.applicationGuildCommands(process.env.client_id, cfg.default.GuildIds.production ?? ""),
+                    Routes.applicationGuildCommands(process.env.client_id, cfg.default.GuildIds.production),
                     { body: commands },
                 );
-    
+        
+                // Handle the response
                 if (Array.isArray(responseData)) {
                     data = responseData;
                 } else {
@@ -56,11 +58,13 @@ for (const folder of commandFolders) {
                     process.exit(1);
                 }
             } else {
+                // Use global application commands in production if no specific guild ID is provided
                 const responseData = await rest.put(
                     Routes.applicationCommands(process.env.client_id),
                     { body: commands },
                 );
-    
+        
+                // Handle the response
                 if (Array.isArray(responseData)) {
                     data = responseData;
                 } else {
@@ -69,11 +73,13 @@ for (const folder of commandFolders) {
                 }
             }
         } else {
+            // Use development guild ID for non-production environments
             const responseData = await rest.put(
-                Routes.applicationGuildCommands(process.env.client_id, cfg.default.GuildIds.development),
+                Routes.applicationGuildCommands(process.env.client_id, cfg.default.GuildIds.development ?? ""),
                 { body: commands },
             );
-
+        
+            // Handle the response
             if (Array.isArray(responseData)) {
                 data = responseData;
             } else {
@@ -81,6 +87,7 @@ for (const folder of commandFolders) {
                 process.exit(1);
             }
         }
+        
 
         console.log(`Successfully reloaded ${data.length} application (/) commands.`);
     } catch (error) {
