@@ -2,7 +2,6 @@ import { SlashCommandBuilder, CommandInteraction, EmbedBuilder, ButtonBuilder, B
 import ISlashCommand from "../../../interfaces/ISlashCommand";
 import Sdk from "vtuberwiki-sdk";
 import axios from "axios";
-import IClient from "../../../interfaces/IClient";
 import { fNumber } from "developer-toolkit-utils";
 import config from "../../../config";
 

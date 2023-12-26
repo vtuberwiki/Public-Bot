@@ -1,3 +1,8 @@
+---
+title: README
+description: Learn how to create a new command for the Vtuber Wiki Discord Bot.
+---
+
 # Vtuber Wiki Discord Bot Documentation
 
 Welcome to the official documentation for the Vtuber Wiki Discord Bot. This document provides comprehensive information on the bot's features, setup, and customization options.

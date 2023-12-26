@@ -14,7 +14,10 @@ interface IConfig {
     StaffPrefix: string;
     github_url: string;
     UpdatesChannel: string;
-    GuildId: string;
+    GuildIds: {
+        production: string | null;
+        development: string;
+    }
     StaffRole: string;
     Intents: GatewayIntentBits[];
     startupActivity: string;

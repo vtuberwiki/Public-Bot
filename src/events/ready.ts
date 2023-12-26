@@ -1,6 +1,8 @@
 import { Events, ActivityType } from "discord.js";
 import config from "../config";
 import { StartWatching } from "../core/Watcher";
+import { getActivityType } from "../utils/discord"
+
 
 module.exports = {
     name: Events.ClientReady,
@@ -10,6 +12,8 @@ module.exports = {
         console.clear();
         client.user.setActivity({ type: ActivityType.Custom, name: config.startupActivity });
         console.log(`Logged in as ${client.user.tag}`);
+
+
 
         setInterval(() => {
             const random = config.Activities[Math.floor(Math.random() * config.Activities.length)];
@@ -34,19 +38,3 @@ module.exports = {
     }
 }
 
-function getActivityType(type: string): ActivityType | undefined {
-    switch (type.toLowerCase()) {
-        case 'playing':
-            return ActivityType.Playing;
-        case 'listening':
-            return ActivityType.Listening;
-        case 'watching':
-            return ActivityType.Watching;
-        case 'competing':
-            return ActivityType.Competing;
-        case 'custom':
-            return ActivityType.Custom;
-        default:
-            return undefined;
-    }
-}

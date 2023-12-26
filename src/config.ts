@@ -4,7 +4,10 @@ import { IConfig, IActivity } from "./interfaces/IConfig";
 
 const config: IConfig = {
     StaffPrefix: "!!",
-    GuildId: "1166212127044931718",
+    GuildIds: {
+        production: null,
+        development: "1010372303911129088"
+    },
     StaffRole: "1166213537153167450",
     UpdatesChannel: "1166214000963506226",
     Intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildEmojisAndStickers, GatewayIntentBits.GuildMessages],

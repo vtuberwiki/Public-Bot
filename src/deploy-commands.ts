@@ -43,20 +43,34 @@ for (const folder of commandFolders) {
         let data: any[] = [];
 
         if (process.env.environment === "production") {
-            const responseData = await rest.put(
-                Routes.applicationCommands(process.env.client_id),
-                { body: commands },
-            );
-
-            if (Array.isArray(responseData)) {
-                data = responseData;
+            if (cfg.default.GuildIds.production !== null) {
+                const responseData = await rest.put(
+                    Routes.applicationGuildCommands(process.env.client_id, cfg.default.GuildIds.production ?? ""),
+                    { body: commands },
+                );
+    
+                if (Array.isArray(responseData)) {
+                    data = responseData;
+                } else {
+                    console.error("Invalid response data format");
+                    process.exit(1);
+                }
             } else {
-                console.error("Invalid response data format");
-                process.exit(1);
+                const responseData = await rest.put(
+                    Routes.applicationCommands(process.env.client_id),
+                    { body: commands },
+                );
+    
+                if (Array.isArray(responseData)) {
+                    data = responseData;
+                } else {
+                    console.error("Invalid response data format");
+                    process.exit(1);
+                }
             }
         } else {
             const responseData = await rest.put(
-                Routes.applicationGuildCommands(process.env.client_id, cfg.default.GuildId),
+                Routes.applicationGuildCommands(process.env.client_id, cfg.default.GuildIds.development),
                 { body: commands },
             );
 

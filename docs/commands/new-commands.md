@@ -1,3 +1,8 @@
+---
+title: Creating a New Command
+description: Learn how to create a new command for the Vtuber Wiki Discord Bot.
+---
+
 # Creating a New Command
 
 To create a new command for the Vtuber Wiki Discord Bot, you can follow the template provided below. This example focuses on a base command named "stats" that users can build upon.
