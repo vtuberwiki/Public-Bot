@@ -2,6 +2,7 @@ import { Events, ActivityType } from "discord.js";
 import config from "../config";
 import { StartWatching } from "../core/Watcher";
 import { getActivityType } from "../utils/discord"
+import webServer from "../www/server";
 
 
 module.exports = {
@@ -35,6 +36,8 @@ module.exports = {
         if (!isProduction) {
             await StartWatching();
         }
+
+        await webServer(client);
     }
 }
 
