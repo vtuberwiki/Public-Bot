@@ -6,7 +6,7 @@ const config: IConfig = {
     StaffPrefix: "!!",
     GuildIds: {
         production: null,
-        development: "1010372303911129088"
+        development: null,
     },
     StaffRole: "1166213537153167450",
     UpdatesChannel: "1166214000963506226",
