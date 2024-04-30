@@ -11,7 +11,7 @@ module.exports = {
             .setTitle("Thanks for adding me!")
             .setDescription(`Thanks for adding me to your server! My prefix is \`/\``)
             .addFields(
-                { name: "Support Server", value: "https://discord.gg/4KdkmYwV" },
+                { name: "Support Server", value: "https://discord.gg/SqNpKfnjss" },
                 { name: "Invite Link", value: `[Click Here](https://discord.com/oauth2/authorize?client_id=${client.user?.id}&scope=bot%20applications.commands&permissions=8)` },
             )
             .setFooter({
